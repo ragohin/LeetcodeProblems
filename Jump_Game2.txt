@@ -1,0 +1,32 @@
+Solution that runs in O(n^2) with dynamic programming. There are faster solutions that do not use dynamic programming (e.g. greedy), but this is just for practice.
+
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        if(nums.size() <= 1) return 0;
+        
+        vector<int> jumps(nums.size());
+        
+        for(int i = 0; i < jumps.size(); ++i)
+            jumps[i] = INT_MAX;
+
+        jumps[0] = 0;
+        
+        for(int i = 1; i < nums.size(); ++i){
+            for(int k = 0; k <= nums[i]; ++k){
+                if(i+k < nums.size()){
+                    if(jumps[i+k] > (1+jumps[i]))
+                        jumps[i+k] = (1+jumps[i]);
+                }
+
+                if(i+k == nums.size()-1)
+                     return jumps[nums.size()-1];
+            }
+            
+            
+        }
+
+        return jumps[nums.size()-1];
+    }
+};

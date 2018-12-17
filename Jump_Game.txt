@@ -1,0 +1,49 @@
+This is my initial solution that runs on O(n^2) time using dynamic programming. This complexity can be improved.
+
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        vector<bool> bools(nums.size());
+        
+        for(int i = 0; i < nums.size(); ++i)
+            bools[i] = false;
+        
+        bools[0] = true;
+        
+        for(int i = 0; i < nums.size(); ++i){
+            if(bools[i] == true){
+                for(int k = 0; k <= nums[i]; ++k)
+                    bools[i+k] = true;
+            }
+        }
+        return bools[nums.size()-1];
+    }
+};
+
+
+
+This solution runs in O(n) time. This does not use dynamic programming/memoization.
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        if(nums.size() <= 1)
+            return true;
+        
+        int max = nums[0];
+        
+        for(int i = 0; i < nums.size(); ++i){
+            if(max >= nums.size()-1)
+                return true;
+            
+            if(max <= i && nums[i] == 0)
+                return false;
+            
+            if(i + nums[i] > max)
+                max = i + nums[i];
+            
+        }
+        return false;
+    }
+};
